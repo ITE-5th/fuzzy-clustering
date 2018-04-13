@@ -3,17 +3,16 @@ from scipy.linalg import norm
 
 
 class FuzzyCMeans:
-    def __init__(self, number_of_clusters: int, iterations: int = 1000, m: int = 2):
+    def __init__(self, number_of_clusters: int, m: int = 2):
         self.number_of_clusters = number_of_clusters
-        self.iterations = iterations
         self.m = m
 
-    def fit(self, X):
+    def compute(self, X, iterations: int = 1000):
         u = np.random.rand(X.shape[0], self.number_of_clusters)
-        centers = None
         u = np.fmax(u, np.finfo(np.float64).eps)
+        centers = None
         iteration = 1
-        while iteration <= self.iterations:
+        while iteration <= iterations:
             centers = self.compute_next_centers(X, u)
             u = self.compute_next_u(X, centers)
             iteration += 1

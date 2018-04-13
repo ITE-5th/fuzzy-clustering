@@ -9,7 +9,7 @@ number_of_clusters = 2
 X, _ = make_blobs(n_samples=300, centers=number_of_clusters,
                   cluster_std=0.60, random_state=0)
 fuzzy_cmean = FuzzyCMeans(number_of_clusters=number_of_clusters)
-our_centers, our_u = fuzzy_cmean.fit(X)
+our_centers, our_u = fuzzy_cmean.compute(X, iterations=100)
 # skfuzzy_centers, skfuzzy_u, _, _, _, _, _ = cmeans(X.T, number_of_clusters, 2, error=0.005, maxiter=1000, init=None)
 # skfuzzy_centers = skfuzzy_centers.T
 print("centers:")
