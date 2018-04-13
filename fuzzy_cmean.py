@@ -1,21 +1,17 @@
 import numpy as np
 from scipy.linalg import norm
-from sklearn.preprocessing import MinMaxScaler
 
 
 class FuzzyCMeans:
     def __init__(self, number_of_clusters: int, iterations: int = 1000, m: int = 2):
         self.number_of_clusters = number_of_clusters
         self.iterations = iterations
-        self.u = self.centers = None
         self.m = m
-        self.scaler = MinMaxScaler()
 
     def fit(self, X):
-        rows, cols = X.shape
-        u = np.random.rand(rows, self.number_of_clusters)
+        u = np.random.rand(X.shape[0], self.number_of_clusters)
+        centers = None
         u = np.fmax(u, np.finfo(np.float64).eps)
-        # u = self.scaler.fit_transform(u)
         iteration = 1
         while iteration <= self.iterations:
             centers = self.compute_next_centers(X, u)
@@ -29,9 +25,9 @@ class FuzzyCMeans:
             temp = np.power(u[:, i].reshape(-1, 1), self.m)
             t = np.sum(temp * X, axis=0)
             temp = t.reshape(-1) / temp.sum()
-            temp = np.fmax(temp, np.finfo(np.float64).eps)
             centers.append(temp)
         centers = np.asarray(centers)
+        centers = np.fmax(centers, np.finfo(np.float64).eps)
         return centers
 
     def compute_next_u(self, X, centers):
@@ -46,5 +42,4 @@ class FuzzyCMeans:
                 t = np.power(neom / denom, 2 // (self.m - 1))
                 u[i, j] = 1 / t.sum()
         u = np.fmax(u, np.finfo(np.float64).eps)
-        # u = self.scaler.fit_transform(u)
         return u
