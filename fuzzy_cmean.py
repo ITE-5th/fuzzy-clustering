@@ -15,7 +15,7 @@ class FuzzyCMeans:
         rows, cols = X.shape
         u = np.random.rand(rows, self.number_of_clusters)
         u = np.fmax(u, np.finfo(np.float64).eps)
-        u = self.scaler.fit_transform(u)
+        # u = self.scaler.fit_transform(u)
         iteration = 1
         while iteration <= self.iterations:
             centers = self.compute_next_centers(X, u)
@@ -26,7 +26,9 @@ class FuzzyCMeans:
     def compute_next_centers(self, X, u):
         centers = []
         for i in range(self.number_of_clusters):
-            temp = np.sum(u[:, i].reshape(-1, 1) * X, axis=0) / np.sum(u[:, i]).reshape(-1)
+            temp = np.power(u[:, i].reshape(-1, 1), self.m)
+            t = np.sum(temp * X, axis=0)
+            temp = t.reshape(-1) / temp.sum()
             temp = np.fmax(temp, np.finfo(np.float64).eps)
             centers.append(temp)
         centers = np.asarray(centers)
@@ -39,8 +41,10 @@ class FuzzyCMeans:
                 temp = X[i, :].reshape(1, -1)
                 t = centers[j, :].reshape(1, -1)
                 neom = norm(temp - t)
-                denom = norm(temp - centers)
-                u[i, j] = 1 / np.power(neom / denom, 2).sum()
+                denom = temp - centers
+                denom = norm(denom, axis=1)
+                t = np.power(neom / denom, 2 // (self.m - 1))
+                u[i, j] = 1 / t.sum()
         u = np.fmax(u, np.finfo(np.float64).eps)
-        u = self.scaler.fit_transform(u)
+        # u = self.scaler.fit_transform(u)
         return u
