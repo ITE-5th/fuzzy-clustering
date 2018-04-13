@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.linalg import norm
+from sklearn.preprocessing import MinMaxScaler
 
 
 class FuzzyCMeans:
@@ -8,10 +9,13 @@ class FuzzyCMeans:
         self.iterations = iterations
         self.u = self.centers = None
         self.m = m
+        self.scaler = MinMaxScaler()
 
     def fit(self, X):
         rows, cols = X.shape
-        u = np.random.uniform(0, 1, (rows, self.number_of_clusters))
+        u = np.random.rand(rows, self.number_of_clusters)
+        u = np.fmax(u, np.finfo(np.float64).eps)
+        u = self.scaler.fit_transform(u)
         iteration = 1
         while iteration <= self.iterations:
             centers = self.compute_next_centers(X, u)
@@ -38,4 +42,5 @@ class FuzzyCMeans:
                 denom = norm(temp - centers)
                 u[i, j] = 1 / np.power(neom / denom, 2).sum()
         u = np.fmax(u, np.finfo(np.float64).eps)
+        u = self.scaler.fit_transform(u)
         return u
