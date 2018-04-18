@@ -29,9 +29,11 @@ class CMeans:
     def next_centers(self, X, u, m):
         clusters = []
         for j in range(self.clusters_count):
-            nominator = X.T @ (u[:, j] ** m)
-            denominator = np.sum(u[:, j] ** m)
+            nominator = 0
+            for i in range(X.shape[0]):
+                nominator += (u[i, j] ** m) * X[i]
 
+            denominator = np.sum(u[:, j] ** m)
             clusters.append(nominator / denominator)
 
         return np.asarray(clusters)
@@ -56,9 +58,9 @@ class CMeans:
         power = float(2 / (self.m - 1))
         u = np.zeros(self.clusters_count)
 
+        denominator_ = norm(X - centers, axis=1)
         for j in range(self.clusters_count):
             nominator_ = norm(X - centers[j, :])
-            denominator_ = norm(X - centers, axis=1)
             denominator = (nominator_ / denominator_) ** power
             u[j] = 1 / (denominator + 1e-7).sum()
 
