@@ -6,7 +6,7 @@ from skfuzzy import cmeans, cmeans_predict
 from sklearn.cluster import KMeans
 from sklearn.datasets import load_iris
 
-from FCM import FCM
+from fcm import FCM
 
 sns.set()
 

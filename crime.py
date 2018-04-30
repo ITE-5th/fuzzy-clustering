@@ -4,7 +4,7 @@ import seaborn as sns
 from skfuzzy import cmeans
 from sklearn.cluster import KMeans
 
-from FCM import FCM
+from fcm import FCM
 
 sns.set()
 
