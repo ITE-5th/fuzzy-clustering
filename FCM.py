@@ -68,4 +68,4 @@ class FCM:
         u = []
         for i in range(len(X)):
             u.append(self._predict(X[i], self.centers))
-        return np.argmax(u, axis=1)
+        return np.argmax(u)
