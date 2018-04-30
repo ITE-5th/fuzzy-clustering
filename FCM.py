@@ -2,23 +2,24 @@ import numpy as np
 from scipy.linalg import norm
 
 
-class CMeans:
-    def __init__(self):
+class FCM:
+    def __init__(self, n_cluster=4, max_iter=100, m=2):
         super().__init__()
         self.u, self.centers, self.m = None, None, None
-        self.clusters_count = None
-
-    def fit(self, X, m, clusters_count, iterations=100):
-        N = X.shape[0]
+        self.clusters_count = n_cluster
+        self.max_iter = max_iter
         self.m = m
-        C = self.clusters_count = clusters_count
+
+    def fit(self, X):
+        N = X.shape[0]
+        C = self.clusters_count
         centers = []
 
         u = np.random.dirichlet(np.ones(C), size=N)
 
         iteration = 0
-        while iteration < iterations:
-            centers = self.next_centers(X, u, m)
+        while iteration < self.max_iter:
+            centers = self.next_centers(X, u)
             u = self.next_u(X, centers)
             iteration += 1
 
@@ -26,15 +27,15 @@ class CMeans:
         self.centers = centers
         return centers
 
-    def next_centers(self, X, u, m):
+    def next_centers(self, X, u):
         clusters = []
 
         for j in range(self.clusters_count):
             numerator = 0
             for i in range(X.shape[0]):
-                numerator += (u[i, j] ** m) * X[i]
+                numerator += (u[i, j] ** self.m) * X[i]
 
-            denominator = np.sum(u[:, j] ** m)
+            denominator = np.sum(u[:, j] ** self.m)
             clusters.append(numerator / denominator)
 
         return np.asarray(clusters)
