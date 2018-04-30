@@ -39,9 +39,9 @@ for i, y in enumerate(Y):
     kmeans_accuracy += y_predicted2 == y
 
     y_predicted3 = cmeans_predict(np.expand_dims(x, 0).transpose(), cntr, m, error, maxiter=2)[0]
-    y_predicted3 = np.argmax(y_predicted3, axis=0)[0]
+    y_predicted3 = np.argmax(y_predicted3, axis=0)[0] + 1
     cmeans_accuracy += y_predicted3 == y
-    # print(f"y: {y}, fcm: {y_predicted1} , kmeans: {y_predicted2}, cmeans:{y_predicted3}")
+    print(f"y: {y}, fcm: {y_predicted1} , kmeans: {y_predicted2}, cmeans:{y_predicted3}")
 
     # if np.argmax(y_predicted, axis=0) == y:
     #     print(f"equal {i}")
