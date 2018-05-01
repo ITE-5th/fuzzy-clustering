@@ -3,17 +3,17 @@ from scipy.linalg import norm
 
 
 class FCM:
-    def __init__(self, n_cluster=4, max_iter=100, m=2, error=1e-6):
+    def __init__(self, n_clusters=4, max_iter=100, m=2, error=1e-6):
         super().__init__()
-        self.u, self.centers, self.m = None, None, None
-        self.clusters_count = n_cluster
+        self.u, self.centers = None, None
+        self.n_clusters = n_clusters
         self.max_iter = max_iter
         self.m = m
         self.error = error
 
     def fit(self, X):
         N = X.shape[0]
-        C = self.clusters_count
+        C = self.n_clusters
         centers = []
 
         u = np.random.dirichlet(np.ones(C), size=N)
@@ -43,9 +43,9 @@ class FCM:
 
     def _predict(self, X, centers):
         power = float(2 / (self.m - 1))
-        x1 = norm(X - centers, axis=1) ** power
-        denominator_ = x1.reshape((1, -1)).repeat(x1.shape[0], axis=0)
-        denominator_ = x1[:, None] / denominator_
+        temp = norm(X - centers, axis=1) ** power
+        denominator_ = temp.reshape((1, -1)).repeat(temp.shape[0], axis=0)
+        denominator_ = temp[:, None] / denominator_
 
         return 1 / denominator_.sum(1)
 
@@ -54,7 +54,4 @@ class FCM:
             X = np.expand_dims(X, axis=0)
 
         u = np.apply_along_axis(self._predict, 1, X, self.centers)
-
-        # for i in range(len(X)):
-        #     u.append(self._predict(X[i], self.centers))
         return np.argmax(u)
