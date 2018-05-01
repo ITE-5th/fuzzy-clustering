@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.linalg import norm
+from scipy.spatial.distance import cdist
 
 
 class FCM:
@@ -39,9 +40,17 @@ class FCM:
         return (X.T @ um / np.sum(um, axis=0)).transpose()
 
     def next_u(self, X, centers):
-        return np.apply_along_axis(self._predict, 1, X, centers)
+        return self._predict(X, centers)
 
     def _predict(self, X, centers):
+        power = float(2 / (self.m - 1))
+        temp = cdist(X, centers) ** power
+        denominator_ = temp.reshape((X.shape[0], 1, -1)).repeat(temp.shape[-1], axis=1)
+        denominator_ = temp[:, :, None] / denominator_
+
+        return 1 / denominator_.sum(2)
+
+    def _predict2(self, X, centers):
         power = float(2 / (self.m - 1))
         temp = norm(X - centers, axis=1) ** power
         denominator_ = temp.reshape((1, -1)).repeat(temp.shape[0], axis=0)
@@ -53,5 +62,5 @@ class FCM:
         if len(X.shape) == 1:
             X = np.expand_dims(X, axis=0)
 
-        u = np.apply_along_axis(self._predict, 1, X, self.centers)
+        u = self._predict(X, self.centers)
         return np.argmax(u)
