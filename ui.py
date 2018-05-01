@@ -17,6 +17,8 @@ class FilesTreeView(QtWidgets.QTreeView):
     def __init__(self, func, parent=None):
         super().__init__(parent)
         self.func = func
+        self.setMinimumHeight(parent.height())
+        self.setMinimumWidth(parent.width())
 
     def keyPressEvent(self, event):
         self.func(event)
