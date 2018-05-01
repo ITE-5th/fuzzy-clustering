@@ -5,7 +5,7 @@ import numpy as np
 import seaborn as sns
 from sklearn.datasets.samples_generator import make_blobs
 
-from fuzzy_cmeans import FuzzyCMeans
+from algorithms.fuzzy_cmeans import FuzzyCMeans
 
 sns.set()
 number_of_clusters = 3

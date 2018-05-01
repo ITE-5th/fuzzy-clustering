@@ -1,12 +1,10 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
 import seaborn as sns
 from skfuzzy import cmeans, cmeans_predict
 from sklearn.cluster import KMeans
 from sklearn.datasets import load_iris
 
-from fcm import FCM
+from algorithms.fcm import FCM
 
 sns.set()
 

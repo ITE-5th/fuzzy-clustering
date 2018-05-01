@@ -4,6 +4,8 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
+from file_path_manager import FilePathManager
+
 
 def get_type(s):
     try:
@@ -15,7 +17,7 @@ def get_type(s):
 
 np.random.seed(5)
 
-X = pd.read_csv("aircraft.csv", ",")
+X = pd.read_csv(FilePathManager.resolve("data/aircraft.csv"), ",")
 # types = X["Aircraft"]
 # types = types.apply(get_type)
 X = X.as_matrix()[:, 1:]

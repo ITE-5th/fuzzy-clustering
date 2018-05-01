@@ -1,15 +1,15 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 from skfuzzy import cmeans, cmeans_predict
 from sklearn.cluster import KMeans
 
-from fcm import FCM
+from algorithms.fcm import FCM
+from file_path_manager import FilePathManager
 
 sns.set()
 
-dataset_path = "./crime_data.csv"
+dataset_path = FilePathManager.resolve("data/crime_data.csv")
 data = pd.read_csv(dataset_path)
 X = data.iloc[:, 2:].values
 
