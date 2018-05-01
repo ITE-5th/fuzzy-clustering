@@ -4,7 +4,7 @@ import seaborn as sns
 from skfuzzy import cmeans
 from sklearn.cluster import KMeans
 
-from fcm import fcm
+from fcm import FCM
 
 sns.set()
 
@@ -17,7 +17,7 @@ MAX_ITER = 50
 m = 2.00
 
 cntr, _, _, _, _, _, _ = cmeans(X.transpose(), number_of_clusters, m, 1e-8, maxiter=MAX_ITER)
-fcm = fcm(number_of_clusters, MAX_ITER, m)
+fcm = FCM(number_of_clusters, MAX_ITER, m)
 kmeans = KMeans(n_clusters=number_of_clusters, max_iter=MAX_ITER)
 cmean_centers = fcm.fit(X)
 kmeans.fit(X)

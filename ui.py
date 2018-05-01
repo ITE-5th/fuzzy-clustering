@@ -103,7 +103,7 @@ class Ui(QtWidgets.QMainWindow, FormClass):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    app.setStyleSheet(qdarkstyle.load_stylesheet_from_environment(is_pyqtgraph=True))
     ui = Ui()
     ui.setWindowTitle("Image Segmentation")
     ui.show()
