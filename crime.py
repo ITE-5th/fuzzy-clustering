@@ -4,7 +4,7 @@ import seaborn as sns
 from skfuzzy import cmeans
 from sklearn.cluster import KMeans
 
-from fcm import FCM
+from fcm import fcm
 
 sns.set()
 
@@ -17,9 +17,9 @@ MAX_ITER = 50
 m = 2.00
 
 cntr, _, _, _, _, _, _ = cmeans(X.transpose(), number_of_clusters, m, 1e-8, maxiter=MAX_ITER)
-FCM = FCM(number_of_clusters, MAX_ITER, m)
+fcm = fcm(number_of_clusters, MAX_ITER, m)
 kmeans = KMeans(n_clusters=number_of_clusters, max_iter=MAX_ITER)
-cmean_centers = FCM.fit(X)
+cmean_centers = fcm.fit(X)
 kmeans.fit(X)
 
 plt.scatter(X[:, 0], X[:, 1], s=50, cmap='viridis')
