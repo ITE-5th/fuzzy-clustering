@@ -50,14 +50,6 @@ class FCM:
 
         return 1 / denominator_.sum(2)
 
-    def _predict2(self, X, centers):
-        power = float(2 / (self.m - 1))
-        temp = norm(X - centers, axis=1) ** power
-        denominator_ = temp.reshape((1, -1)).repeat(temp.shape[0], axis=0)
-        denominator_ = temp[:, None] / denominator_
-
-        return 1 / denominator_.sum(1)
-
     def predict(self, X):
         if len(X.shape) == 1:
             X = np.expand_dims(X, axis=0)
