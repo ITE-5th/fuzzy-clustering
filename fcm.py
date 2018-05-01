@@ -53,7 +53,8 @@ class FCM:
         if len(X.shape) == 1:
             X = np.expand_dims(X, axis=0)
 
-        u = []
-        for i in range(len(X)):
-            u.append(self._predict(X[i], self.centers))
+        u = np.apply_along_axis(self._predict, 1, X, self.centers)
+
+        # for i in range(len(X)):
+        #     u.append(self._predict(X[i], self.centers))
         return np.argmax(u)
