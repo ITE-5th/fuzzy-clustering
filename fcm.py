@@ -55,4 +55,4 @@ class FCM:
             X = np.expand_dims(X, axis=0)
 
         u = self._predict(X, self.centers)
-        return np.argmax(u)
+        return np.argmax(u, axis=-1)
