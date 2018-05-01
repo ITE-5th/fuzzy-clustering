@@ -1,15 +1,15 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
-
 from scipy import ndimage
 from sklearn import cluster
 
-from fcm import FCM
+from algorithms.fcm import FCM
+from file_path_manager import FilePathManager
 
 sns.set()
 
-image = ndimage.imread("car.jpg")
+image = ndimage.imread(FilePathManager.resolve("images/car.jpg"))
 plt.figure(figsize=(15, 8))
 plt.imshow(image)
 

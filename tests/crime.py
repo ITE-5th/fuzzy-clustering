@@ -4,11 +4,12 @@ import seaborn as sns
 from skfuzzy import cmeans
 from sklearn.cluster import KMeans
 
-from fcm import fcm
+from algorithms.fcm import FCM
+from file_path_manager import FilePathManager
 
 sns.set()
 
-dataset_path = "./crime_data.csv"
+dataset_path = FilePathManager.resolve("data/crime_data.csv")
 data = pd.read_csv(dataset_path)
 X = data.iloc[:, 2:4].values
 
@@ -17,7 +18,7 @@ MAX_ITER = 50
 m = 2.00
 
 cntr, _, _, _, _, _, _ = cmeans(X.transpose(), number_of_clusters, m, 1e-8, maxiter=MAX_ITER)
-fcm = fcm(number_of_clusters, MAX_ITER, m)
+fcm = FCM(number_of_clusters, MAX_ITER, m)
 kmeans = KMeans(n_clusters=number_of_clusters, max_iter=MAX_ITER)
 cmean_centers = fcm.fit(X)
 kmeans.fit(X)

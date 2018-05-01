@@ -7,7 +7,7 @@ from PyQt5 import QtCore, QtGui, uic, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileSystemModel
 
-from fcm import FCM
+from algorithms.fcm import FCM
 from file_path_manager import FilePathManager
 
 FormClass = uic.loadUiType("ui.ui")[0]
@@ -48,7 +48,7 @@ class Ui(QtWidgets.QMainWindow, FormClass):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.root_path = FilePathManager.resolve("test_images")
+        self.root_path = FilePathManager.resolve("images")
         self.filesTreeView = FilesTreeView(self.keyPressEvent, self.filesTreeView)
         self.setup_events()
 
