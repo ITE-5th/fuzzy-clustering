@@ -1,3 +1,4 @@
+import os
 import sys
 
 import cv2
@@ -104,6 +105,7 @@ class Ui(QtWidgets.QMainWindow, FormClass):
 
 
 if __name__ == '__main__':
+    os.environ['PYQTGRAPH_QT_LIB'] = 'PyQt5'
     app = QtWidgets.QApplication(sys.argv)
     app.setStyleSheet(qdarkstyle.load_stylesheet_from_environment(is_pyqtgraph=True))
     ui = Ui()
