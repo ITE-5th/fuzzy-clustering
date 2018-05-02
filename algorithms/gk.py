@@ -54,21 +54,39 @@ class GK:
     def _distance(self, z, v, f):
         dif = np.expand_dims(z.reshape(z.shape[0], 1, -1) - v.reshape(1, v.shape[0], -1), axis=3)
         determ = np.power(np.linalg.det(f), 1 / self.m)
-        det_time_inv = determ.reshape(-1, 1, 1) * np.linalg.inv(f)
+        det_time_inv = determ.reshape(-1, 1, 1) * np.linalg.pinv(f)
         temp = np.matmul(dif.transpose((0, 1, 3, 2)), det_time_inv)
         output = np.matmul(temp, dif).squeeze().T
         return np.fmax(output, 1e-8)
 
     def next_u(self, d):
-        return self._predict(d)
-
-    def _predict(self, d):
-        d = d.transpose()
-
         power = float(1 / (self.m - 1))
+        d = d.transpose()
         denominator_ = d.reshape((d.shape[0], 1, -1)).repeat(d.shape[-1], axis=1)
-        denominator_ = np.power(d[:, np.newaxis, :] / denominator_.transpose((0, 2, 1)), power)
+        denominator_ = np.power(d[:, None, :] / denominator_.transpose((0, 2, 1)), power)
         denominator_ = 1 / denominator_.sum(1)
         denominator_ = denominator_.transpose()
 
         return denominator_
+
+    def predict(self, z, iterations=100):
+        #TODO: this function!
+        N = z.shape[0]
+        C = self.clusters_count
+
+        u = np.random.dirichlet(np.ones(N), size=C)
+
+        iteration = 0
+        while iteration < iterations:
+            u2 = u.copy()
+
+            F = self._covariance(z, self.centers, u)
+            dist = self._distance(z, self.centers, F)
+            u = self.next_u(dist)
+            iteration += 1
+
+            # Stopping rule
+            if norm(u - u2) < self.error:
+                break
+
+        return np.argmax(u, axis=-1)

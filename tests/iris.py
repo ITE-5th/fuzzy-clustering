@@ -5,6 +5,7 @@ from sklearn.cluster import KMeans
 from sklearn.datasets import load_iris
 
 from algorithms.fcm import FCM
+from algorithms.gk import GK
 
 sns.set()
 
@@ -18,12 +19,16 @@ error = 1e-8
 for _ in range(50):
     cntr = cmeans(X.transpose(), number_of_clusters, m, error, maxiter=MAX_ITER)[0]
     fcm = FCM(number_of_clusters, MAX_ITER, m)
+    gk = GK(number_of_clusters, MAX_ITER, m)
+
     kmeans = KMeans(n_clusters=number_of_clusters, max_iter=MAX_ITER)
     cmean_centers = fcm.fit(X)
     kmeans.fit(X)
+    gk_centers = gk.fit(X)
 
     kmeans_accuracy = 0
     fcm_accuracy = 0
+    gk_accuracy = 0
     cmeans_accuracy = 0
     cmeans_accuracy2 = 0
 
@@ -31,6 +36,9 @@ for _ in range(50):
         x = X[i]
         y_predicted1 = fcm.predict(x)
         fcm_accuracy += y_predicted1 == y
+
+        y_predicted4 = gk.predict(x)
+        gk_accuracy += y_predicted4 == y
 
         y_predicted2 = kmeans.predict([x])[0]
         kmeans_accuracy += y_predicted2 == y
@@ -46,4 +54,5 @@ for _ in range(50):
         # else:
         #     print(y_predicted)
 
-    print(f"FCM Accuracy: {fcm_accuracy/len(X)}, K-Means Score: {kmeans_accuracy/len(X)}, CMeans: {cmeans_accuracy/len(X)}")
+    print(
+        f"FCM Accuracy: {fcm_accuracy/len(X)}, K-Means Score: {kmeans_accuracy/len(X)}, CMeans: {cmeans_accuracy/len(X)}, GK: {gk_accuracy/len(X)}")
