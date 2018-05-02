@@ -46,7 +46,7 @@ class FCM:
         power = float(2 / (self.m - 1))
         temp = cdist(X, centers) ** power
         denominator_ = temp.reshape((X.shape[0], 1, -1)).repeat(temp.shape[-1], axis=1)
-        denominator_ = temp[:, :, None] / denominator_
+        denominator_ = temp[:, :, np.newaxis] / denominator_
 
         return 1 / denominator_.sum(2)
 
