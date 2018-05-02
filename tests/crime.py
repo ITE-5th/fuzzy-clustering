@@ -4,14 +4,11 @@ import seaborn as sns
 from skfuzzy import cmeans
 from sklearn.cluster import KMeans
 
-<<<<<<< HEAD:crime.py
-from fcm import FCM
-=======
 from algorithms.fcm import FCM
-from file_path_manager import FilePathManager
->>>>>>> 67ee86b0fbd317911afeb9cf3b941690df36c7e7:tests/crime.py
 
 sns.set()
+
+from file_path_manager import FilePathManager
 
 dataset_path = FilePathManager.resolve("data/crime_data.csv")
 data = pd.read_csv(dataset_path)
