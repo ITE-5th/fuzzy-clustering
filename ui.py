@@ -49,6 +49,9 @@ class ImageWidget(QtWidgets.QWidget):
 
 
 class Ui(QtWidgets.QMainWindow, FormClass):
+    CMEANS = 0
+    GK = 1
+
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
@@ -70,13 +73,13 @@ class Ui(QtWidgets.QMainWindow, FormClass):
     def select_gk(self, active):
         if not active:
             return
-        self.algorithm = "gk"
+        self.algorithm = self.GK
         print(self.algorithm)
 
     def select_cmeans(self, active):
         if not active:
             return
-        self.algorithm = "cmeans"
+        self.algorithm = self.CMEANS
         print(self.algorithm)
 
     def item_selection_changed_slot(self):
@@ -111,7 +114,7 @@ class Ui(QtWidgets.QMainWindow, FormClass):
         n_clusters = int(self.n_clusters_text.text())
         iterations = int(self.iterations_text.text())
 
-        if self.algorithm == "cmeans":
+        if self.algorithm == self.CMEANS:
             algorithm = FCM(n_clusters=n_clusters, max_iter=iterations, m=m)
         else:
             algorithm = GK(n_clusters=n_clusters, max_iter=iterations, m=m)

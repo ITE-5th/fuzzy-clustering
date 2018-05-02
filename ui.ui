@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>852</width>
+    <width>728</width>
     <height>620</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QTreeView" name="filesTreeView">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>10</x>
+      <y>10</y>
       <width>271</width>
       <height>321</height>
      </rect>
@@ -27,9 +27,9 @@
    <widget class="QLabel" name="imageLabel">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>310</x>
       <y>30</y>
-      <width>491</width>
+      <width>381</width>
       <height>251</height>
      </rect>
     </property>
@@ -128,24 +128,11 @@
      <string>Segment</string>
     </property>
    </widget>
-   <widget class="QLabel" name="output_image">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>330</y>
-      <width>491</width>
-      <height>251</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>330</y>
+      <x>40</x>
+      <y>340</y>
       <width>211</width>
       <height>91</height>
      </rect>
@@ -182,6 +169,19 @@
       <bool>true</bool>
      </property>
     </widget>
+   </widget>
+   <widget class="QLabel" name="output_image">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>340</y>
+      <width>381</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
  </widget>
