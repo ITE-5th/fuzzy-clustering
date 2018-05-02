@@ -55,4 +55,7 @@ for _ in range(50):
         #     print(y_predicted)
 
     print(
-        f"FCM Accuracy: {fcm_accuracy/len(X)}, K-Means Score: {kmeans_accuracy/len(X)}, CMeans: {cmeans_accuracy/len(X)}, GK: {gk_accuracy/len(X)}")
+        f"FCM Accuracy: {fcm_accuracy/len(X)}, "
+        f"K-Means Score: {kmeans_accuracy/len(X)}, "
+        f"CMeans: {cmeans_accuracy/len(X)}, "
+        f"GK: {gk_accuracy/len(X)}")

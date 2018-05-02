@@ -5,6 +5,7 @@ from scipy import ndimage
 from sklearn import cluster
 
 from algorithms.fcm import FCM
+from algorithms.gk import GK
 from file_path_manager import FilePathManager
 
 sns.set()
@@ -25,7 +26,7 @@ plt.figure(figsize=(15, 8))
 plt.title("KMeans")
 plt.imshow(cluster_centers[cluster_labels].astype(np.int32).reshape(x, y, z))
 
-cmeans_cluster = FCM(n_clusters=7)
+cmeans_cluster = GK(n_clusters=7)
 cmeans_cluster.fit(image_2d)
 cluster_centers = cmeans_cluster.centers
 cluster_labels = np.arange(0, 7)

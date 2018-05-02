@@ -5,7 +5,7 @@ from scipy.linalg import norm
 class GK:
     def __init__(self, n_clusters=4, max_iter=100, m=2, error=1e-6):
         super().__init__()
-        self.u, self.centers = None, None
+        self.u, self.centers, self.f = None, None, None
         self.clusters_count = n_clusters
         self.max_iter = max_iter
         self.m = m
@@ -32,6 +32,7 @@ class GK:
             if norm(u - u2) < self.error:
                 break
 
+        self.f = f
         self.u = u
         self.centers = centers
         return centers
@@ -69,24 +70,13 @@ class GK:
 
         return denominator_
 
-    def predict(self, z, iterations=100):
-        #TODO: this function!
-        N = z.shape[0]
-        C = self.clusters_count
+    def predict(self, z):
+        if len(z.shape) == 1:
+            z = np.expand_dims(z, axis=0)
 
-        u = np.random.dirichlet(np.ones(N), size=C)
+        dist = self._distance(z, self.centers, self.f)
+        if len(dist.shape) == 1:
+            dist = np.expand_dims(dist, axis=0)
 
-        iteration = 0
-        while iteration < iterations:
-            u2 = u.copy()
-
-            F = self._covariance(z, self.centers, u)
-            dist = self._distance(z, self.centers, F)
-            u = self.next_u(dist)
-            iteration += 1
-
-            # Stopping rule
-            if norm(u - u2) < self.error:
-                break
-
-        return np.argmax(u, axis=-1)
+        u = self.next_u(dist)
+        return np.argmax(u, axis=0)
