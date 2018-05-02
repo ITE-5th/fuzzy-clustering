@@ -9,6 +9,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileSystemModel
 
 from algorithms.fcm import FCM
+from algorithms.gk import GK
 from file_path_manager import FilePathManager
 
 FormClass = uic.loadUiType("ui.ui")[0]
@@ -51,6 +52,7 @@ class Ui(QtWidgets.QMainWindow, FormClass):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
+        self.algorithm = "cmeans"
         self.root_path = FilePathManager.resolve("images")
         self.filesTreeView = FilesTreeView(self.keyPressEvent, self.filesTreeView)
         self.setup_events()
@@ -62,6 +64,20 @@ class Ui(QtWidgets.QMainWindow, FormClass):
         self.filesTreeView.setRootIndex(root)
         self.filesTreeView.selectionModel().selectionChanged.connect(self.item_selection_changed_slot)
         self.segment_button.clicked.connect(self.segment)
+        self.gk_radio.toggled.connect(self.select_gk)
+        self.cmeans_radio.toggled.connect(self.select_cmeans)
+
+    def select_gk(self, active):
+        if not active:
+            return
+        self.algorithm = "gk"
+        print(self.algorithm)
+
+    def select_cmeans(self, active):
+        if not active:
+            return
+        self.algorithm = "cmeans"
+        print(self.algorithm)
 
     def item_selection_changed_slot(self):
         index = self.filesTreeView.selectedIndexes()[0]
@@ -95,9 +111,13 @@ class Ui(QtWidgets.QMainWindow, FormClass):
         n_clusters = int(self.n_clusters_text.text())
         iterations = int(self.iterations_text.text())
 
-        fcm = FCM(n_clusters, iterations, m)
-        cluster_centers = fcm.fit(img)
-        output = fcm.predict(img)
+        if self.algorithm == "cmeans":
+            algorithm = FCM(n_clusters=n_clusters, max_iter=iterations, m=m)
+        else:
+            algorithm = GK(n_clusters=n_clusters, max_iter=iterations, m=m)
+
+        cluster_centers = algorithm.fit(img)
+        output = algorithm.predict(img)
         img = cluster_centers[output].astype(np.int32).reshape(x, y, 3)
         image_path = f"./temp.png"
         cv2.imwrite(image_path, img)
