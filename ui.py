@@ -74,13 +74,11 @@ class Ui(QtWidgets.QMainWindow, FormClass):
         if not active:
             return
         self.algorithm = self.GK
-        print(self.algorithm)
 
     def select_cmeans(self, active):
         if not active:
             return
         self.algorithm = self.CMEANS
-        print(self.algorithm)
 
     def item_selection_changed_slot(self):
         index = self.filesTreeView.selectedIndexes()[0]
