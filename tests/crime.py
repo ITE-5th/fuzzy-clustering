@@ -35,6 +35,6 @@ kmeans_centers = kmeans.cluster_centers_
 km_s = plt.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], c='red', s=200, alpha=0.7)
 
 cm_s = plt.scatter(cntr[:, 0], cntr[:, 1], c='green', s=200, alpha=0.7)
-plt.legend((points_s, gk_s, fcm_s, cm_s, km_s),
-           ("Points", "GK Centers", "Our FCM Centers", "skfuzzy Centers", "K-Means Center"))
+plt.legend((gk_s, fcm_s, cm_s, km_s, points_s),
+           ("GK Centers", "Our FCM Centers", "skfuzzy FCM Centers", "K-Means Centers", "Points"))
 plt.show()
