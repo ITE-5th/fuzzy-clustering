@@ -27,12 +27,14 @@ cmean_centers = fcm.fit(X)
 gk_centers = gk.fit(X)
 kmeans.fit(X)
 
-plt.scatter(X[:, 0], X[:, 1], s=50, cmap='viridis')
-plt.scatter(cmean_centers[:, 0], cmean_centers[:, 1], c='black', s=300, alpha=0.7)
-plt.scatter(gk_centers[:, 0], gk_centers[:, 1], c='yellow', s=300, alpha=0.7)
+points_s = plt.scatter(X[:, 0], X[:, 1], s=100, cmap='viridis')
+fcm_s = plt.scatter(cmean_centers[:, 0], cmean_centers[:, 1], c='black', s=250, alpha=0.7)
+gk_s = plt.scatter(gk_centers[:, 0], gk_centers[:, 1], c='yellow', s=200, alpha=0.7)
 
 kmeans_centers = kmeans.cluster_centers_
-plt.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], c='red', s=200, alpha=0.7)
+km_s = plt.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], c='red', s=200, alpha=0.7)
 
-plt.scatter(cntr[:, 0], cntr[:, 1], c='green', s=100, alpha=0.7)
+cm_s = plt.scatter(cntr[:, 0], cntr[:, 1], c='green', s=200, alpha=0.7)
+plt.legend((points_s, gk_s, fcm_s, cm_s, km_s),
+           ("Points", "GK Centers", "Our FCM Centers", "skfuzzy Centers", "K-Means Center"))
 plt.show()
