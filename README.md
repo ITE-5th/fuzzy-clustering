@@ -3,7 +3,7 @@ we have implemented two algorithms: <a href="http://w3.ualg.pt/~jvo/ml2015-16/ml
 
 ### Example:
 
-![Alt text](/picture.png?raw=true "comparisons")
+![Alt text](/image.png?raw=true "comparisons")
 
 <ul>
   <li>50 Iterations</li>
