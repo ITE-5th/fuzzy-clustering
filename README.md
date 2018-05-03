@@ -5,6 +5,7 @@ we have implemented two algorithms: <a href="http://w3.ualg.pt/~jvo/ml2015-16/ml
 
 ![Alt text](/image.png?raw=true "comparisons")
 
+#### Example Details:
 <ul>
   <li>50 Iterations</li>
   <li>m = 2</li>
@@ -14,7 +15,7 @@ we have implemented two algorithms: <a href="http://w3.ualg.pt/~jvo/ml2015-16/ml
 
 <hr>
 
-### Details:
+### Implementation Details:
 - [x] Sci-kit Learn like structure.
 - [x] Fully vectorized.
 - [x] User interface for image segmentation.
