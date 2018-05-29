@@ -1,6 +1,6 @@
 # Fuzzy Clustering Algorithms:
 we have implemented two algorithms: <a href="http://w3.ualg.pt/~jvo/ml2015-16/ml2015-16L17.pdf">Gustafson Kessel</a>, and <a href="https://home.deib.polimi.it/matteucc/Clustering/tutorial_html/cmeans.html">C-Means</a>.
-check <a href="https://youtu.be/fO31mftDx-s>this</a> video out for algorithms' outputs.
+check <a href="https://youtu.be/fO31mftDx-s">this</a> video out for algorithms' outputs.
 
 ### Example:
 
