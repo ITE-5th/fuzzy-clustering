@@ -8,9 +8,9 @@ from PyQt5 import QtCore, QtGui, uic, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileSystemModel
 
-from algorithms.fcm import FCM
-from algorithms.gk import GK
 from file_path_manager import FilePathManager
+from fuzzy_clust_algos.fcm import FCM
+from fuzzy_clust_algos.gk import GK
 
 FormClass = uic.loadUiType("ui.ui")[0]
 
