@@ -71,6 +71,10 @@ class GK:
         return denominator_
 
     def predict(self, z):
+        u = self.predict_proba(z)
+        return np.argmax(u, axis=0)
+
+    def predict_proba(self, z):
         if len(z.shape) == 1:
             z = np.expand_dims(z, axis=0)
 
@@ -78,5 +82,4 @@ class GK:
         if len(dist.shape) == 1:
             dist = np.expand_dims(dist, axis=0)
 
-        u = self.next_u(dist)
-        return np.argmax(u, axis=0)
+        return self.next_u(dist)
